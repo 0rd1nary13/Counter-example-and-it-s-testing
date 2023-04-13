@@ -98,10 +98,7 @@ public class Counter
     public boolean rolledOver()
     {
         // CHANGE THE RETURN TO THE ROLLOVER STATUS OF THE COUNTER
-        if (this.val == this.max || this.val == this.min) {
-            return true;
-        }
-        return false;
+                return this.val == this.max || this.val == this.min;
     }
     
     /**

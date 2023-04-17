@@ -2,9 +2,10 @@
 /**
  * The counter class implements a counter that will roll over to the initial
  * value when it hits the maximum value.
- * 
- * @author Charles Hoot 
- * @version 4.0
+
+*   This project was completed at Apr 17 2023 by group "Better Call Stack"
+*   with group member: Huiguang Ma, Linh Pham, Huiguang Ma(Jager is me), jaya singh and Vincent Xayasak.
+
  */
 public class Counter
 {

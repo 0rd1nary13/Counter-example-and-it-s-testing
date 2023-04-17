@@ -1,4 +1,10 @@
+/*
+This project was completed at Apr 17 2023 by group "Better Call Stack"
+with group member: Huiguang Ma, Linh Pham, Huiguang Ma(Jager is me), jaya singh and Vincent Xayasak.
+*/
+
 //Rational class has denominator and numerator
+
 //Rational class has methods to compute negation, reciprocal, compare two rational numbers for equality,
 // compute sum of two rational numbers, and compute two rational numbers difference
 //It also will compute the result of two rational numbers multiplication and division

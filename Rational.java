@@ -8,10 +8,11 @@ public class Rational {
     private int numerator;
     //denominator cannot be 0
     private int denominator;
-    //defalt constructor initializes numerator and denominator to 1
+    //default constructor initializes numerator and denominator to 1
     public Rational() {
         this(1, 1);
     }
+
     public Rational(int numerator, int denominator) {
         this.numerator = numerator;
         if(denominator != 0) {
@@ -46,6 +47,11 @@ public class Rational {
         return new Rational(-numerator, denominator);
     }
 
+    //Invert a rational number r
+    public Rational invert() {
+        return new Rational(denominator, numerator);
+    }
+
     //compute reciprocal of rational number
     public Rational reciprocal() {
         return new Rational(denominator, numerator);
@@ -53,14 +59,16 @@ public class Rational {
 
     //compute sum of two rational numbers
     public Rational add(Rational rational) {
-        int numerator = this.numerator * rational.denominator + this.denominator * rational.numerator;
+        int numerator = this.numerator * rational.denominator
+                + this.denominator * rational.numerator;
         int denominator = this.denominator * rational.denominator;
         return new Rational(numerator, denominator);
     }
 
     //compute difference of two rational numbers
     public Rational subtract(Rational rational) {
-        int numerator = this.numerator * rational.denominator - this.denominator * rational.numerator;
+        int numerator = this.numerator * rational.denominator
+                - this.denominator * rational.numerator;
         int denominator = this.denominator * rational.denominator;
         return new Rational(numerator, denominator);
     }
@@ -81,11 +89,41 @@ public class Rational {
 
     //compare two rational numbers for equality
     public boolean equals(Rational rational) {
-        return this.numerator * rational.denominator == this.denominator * rational.numerator;
+        return this.numerator * rational.denominator
+                == this.denominator * rational.numerator;
     }
 
-    //convert rational number to string
-    public String toString() {
-        return numerator + "/" + denominator;
+    /*
+     * Put the rational number in normal form where the numerator
+     * and the denominator share no common factors.  Guarantee that only the numerator
+     * is negative.
+     *
+     */
+    private void normalize() {
+        int gcd = gcd(Math.abs(numerator), Math.abs(denominator));
+        numerator /= gcd;
+        denominator /= gcd;
+    }
+
+    /**
+     * Recursively compute the greatest common divisor of two positive integers
+     *
+     * @param a the first argument of gcd
+     * @param b the second argument of gcd
+     * @return the gcd of the two arguments
+     */
+    private int gcd(int a, int b)
+    {
+        int result = 0;
+        if(a<b)
+            result = gcd(b,a);
+        else if(b==0)
+            result = a;
+        else
+        {
+            int remainder = a % b;
+            result = gcd(b, remainder);
+        }
+        return result;
     }
 }

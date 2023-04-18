@@ -46,10 +46,8 @@ public class Counter
      */
     public boolean equals(Object otherObject)
     {
-        if (otherObject instanceof Counter)
-        {
-            // YOUR CODE GOES HERE
-            return true;
+        if(otherObject instanceof Counter otherCounter){
+            return this.val == otherCounter.val && this.min == otherCounter.min && this.max == otherCounter.max;
         }
         return false;
     }

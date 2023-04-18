@@ -1,10 +1,4 @@
-/*
-This project was completed at Apr 17 2023 by group "Better Call Stack"
-with group member: Huiguang Ma, Linh Pham, Huiguang Ma(Jager is me), jaya singh and Vincent Xayasak.
-*/
-
 //Rational class has denominator and numerator
-
 //Rational class has methods to compute negation, reciprocal, compare two rational numbers for equality,
 // compute sum of two rational numbers, and compute two rational numbers difference
 //It also will compute the result of two rational numbers multiplication and division
@@ -18,14 +12,21 @@ public class Rational {
     public Rational() {
         this(1, 1);
     }
+//overload constructor also simplifies rational number
 
     public Rational(int numerator, int denominator) {
-        this.numerator = numerator;
-        if(denominator != 0) {
-            this.denominator = denominator;
-        } else {
-            throw new IllegalArgumentException("Denominator cannot be 0");
+        if (denominator == 0) {
+            throw new ZeroDenominatorException("Denominator cannot be 0");
+        }else if(numerator < 0 && denominator < 0){
+            numerator = Math.abs(numerator);
+            denominator = Math.abs(denominator);
+        }else if(denominator < 0){
+            numerator = -numerator;
+            denominator = Math.abs(denominator);
         }
+        this.numerator = numerator;
+        this.denominator = denominator;
+        normalize();
     }
 
     //get numerator
@@ -133,3 +134,135 @@ public class Rational {
         return result;
     }
 }
+
+// Sample Run at RationalTest
+/*/Users/jagerforest/Library/Java/JavaVirtualMachines/openjdk-20/Contents/Home/bin/java -javaagent:/Applications/IntelliJ IDEA.app/Contents/lib/idea_rt.jar=50651:/Applications/IntelliJ IDEA.app/Contents/bin -Dfile.encoding=UTF-8 -Dsun.stdout.encoding=UTF-8 -Dsun.stderr.encoding=UTF-8 -classpath /Users/jagerforest/IdeaProjects/_666/out/production/_666 RationalTest
+TESTING the constructor, getNumerator, getDenominator
+Trying default constructor
+ Passes
+ Passes
+Constructing 2/5
+ Passes
+ Passes
+ Passes
+Trying 2/0
+ Passes
+Trying 42/30
+ Passes
+ Passes
+Trying 6/-3
+ Passes
+ Passes
+Trying -6/-3
+ Passes
+ Passes
+Trying -6/3
+ Passes
+ Passes
+Trying 0/3
+ Passes
+ Passes
+Constructor tests finished
+
+
+TESTING the negate method
+Negate 1/2
+ Passes
+ Passes
+ Passes
+ Passes
+Negate -2/3
+ Passes
+ Passes
+ Passes
+ Passes
+Negate tests finished
+
+
+TESTING the invert method
+Invert 1/2
+ Passes
+ Passes
+ Passes
+ Passes
+Invert -2/3
+ Passes
+ Passes
+ Passes
+ Passes
+Invert 0/5
+ Passes
+Invert tests finished
+
+
+TESTING the add and subtract methods
+Adding 1/2 and 1/2
+ Passes
+ Passes
+ Passes
+ Passes
+Adding 4/7 and 3/5
+ Passes
+ Passes
+ Passes
+ Passes
+ Passes
+ Passes
+Adding 1/2 and 1/6
+ Passes
+ Passes
+Subtracting 1/2 and 1/2
+ Passes
+ Passes
+ Passes
+ Passes
+Subtracting 4/7 and 3/5
+ Passes
+ Passes
+ Passes
+ Passes
+ Passes
+ Passes
+Subtracting 1/2 and 1/6
+ Passes
+ Passes
+Add/Subtract tests finished
+
+
+TESTING the multiply and divide methods
+Multiply 1/2 and 1/2
+ Passes
+ Passes
+ Passes
+ Passes
+Multiply 5/7 and 3/5
+ Passes
+ Passes
+ Passes
+ Passes
+ Passes
+ Passes
+Multiply 1/2 and 0/1
+ Passes
+ Passes
+Dividing 1/2 by 1/2
+ Passes
+ Passes
+ Passes
+ Passes
+Dividing 4/7 by 3/28
+ Passes
+ Passes
+ Passes
+ Passes
+ Passes
+ Passes
+Dividing 1/2 by 1/6
+ Passes
+ Passes
+Dividing 1/2 by 0/1
+ Passes
+Multiply/Divide tests finished
+
+Process finished with exit code 0
+*/

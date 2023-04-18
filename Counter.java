@@ -4,7 +4,7 @@
  * value when it hits the maximum value.
 
 *   This project was completed at Apr 17 2023 by group "Better Call Stack"
-*   with group member: Huiguang Ma, Linh Pham, Huiguang Ma(Jager is me), jaya singh and Vincent Xayasak.
+*   with group member:  Linh Pham, Huiguang Ma(Jager is me), jaya singh and Vincent Xayasak.
 
  */
 public class Counter

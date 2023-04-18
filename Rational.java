@@ -39,16 +39,6 @@ public class Rational {
         return denominator;
     }
 
-    //set numerator
-    public void setNumerator(int numerator) {
-        this.numerator = numerator;
-    }
-
-    //set denominator
-    public void setDenominator(int denominator) {
-        this.denominator = denominator;
-    }
-
     //compute negation of rational number
     public Rational negate() {
         return new Rational(-numerator, denominator);

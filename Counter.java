@@ -10,11 +10,13 @@
  */
 public class Counter
 {
+    //these are the private integers
     private int min;
     private int max;
     private int val;
     private int previousVal;
 
+    //this defalt constructor set min,val to 0,and max to maxium.
     public Counter()
     {
         this.min = 0;
@@ -22,7 +24,7 @@ public class Counter
         this.val = 0;
         this.previousVal = this.val;
     }
-
+    //this is the overload constructor
     public Counter(int min, int max)
     {
         if(min >= max) {
@@ -33,7 +35,7 @@ public class Counter
         this.val = min;
         this.previousVal = this.val;
     }
-
+    //Determine if two counters are in the same state
     public boolean equals(Object otherObject)
     {
         if(otherObject instanceof Counter otherCounter){
@@ -41,7 +43,7 @@ public class Counter
         }
         return false;
     }
-
+    //increase the counter obj by 1
     public void increase()
     {
         this.val++;
@@ -50,7 +52,7 @@ public class Counter
             this.val = this.min;
         }
     }
-
+    //decrease the counter obj by 1
     public void decrease()
     {
         this.val--;
@@ -59,12 +61,17 @@ public class Counter
             this.val = this.max;
         }
     }
-
+    //get the value of the counter and return it
     public int value()
     {
         return this.val;
     }
-
+/**
+* Accessor that allows the client to determine if the counter
+* rolled over on the last count
+*
+* @return true if the counter rolled over
+*/
     public boolean rolledOver()
     {
         if(this.previousVal > this.max || this.previousVal < this.min){
@@ -72,7 +79,12 @@ public class Counter
         }
         return false;
     }
-
+/**
+* Override the toString method to provide a more informative
+* description of the counter
+*
+* @return a descriptive string about the object
+*/
     public String toString()
     {
         return "Counter object with current value of "+this.val+", minimum of "+this.min+", and maximum of "+this.max+".\nRolled Over: "+rolledOver();

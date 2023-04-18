@@ -1,783 +1,258 @@
-/**
- * RationalTest - A class that tests the Rational class.
- *
- * @author Charles Hoot
- * @version 4.0
- */
-public class RationalTest
-{
-    public static void main (String args[])
-    {
-        testConstructor();
-        testNegate();
-        testInvert();
-        testAddSubtract();
-        testMultiplyDivide();
+//Rational class has denominator and numerator
+//Rational class has methods to compute negation, reciprocal, compare two rational numbers for equality,
+// compute sum of two rational numbers, and compute two rational numbers difference
+//It also will compute the result of two rational numbers multiplication and division
+//It also has a method to convert rational number to string
+
+public class Rational {
+    private int numerator;
+    //denominator cannot be 0
+    private int denominator;
+    //default constructor initializes numerator and denominator to 1
+    public Rational() {
+        this(1, 1);
     }
-    public static void testConstructor()
-    {
-        System.out.println("TESTING the constructor, getNumerator, getDenominator");
-        System.out.println("Trying default constructor");
-        Rational r0 = new Rational();
-        if(r0.getNumerator() == 1)
-        {
-            System.out.println(" Passes");
+//overload constructor also simplifies rational number
+
+    public Rational(int numerator, int denominator) {
+        if (denominator == 0) {
+            throw new ZeroDenominatorException("Denominator cannot be 0");
+        }else if(numerator < 0 && denominator < 0){
+            numerator = Math.abs(numerator);
+            denominator = Math.abs(denominator);
+        }else if(denominator < 0){
+            numerator = -numerator;
+            denominator = Math.abs(denominator);
         }
-        else
-        {
-            System.out.println("**** Fails - numerator not 1");
-        }
-        if(r0.getDenominator() == 1)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - denominator not 1");
-        }
-        System.out.println("Constructing 2/5");
-        try{
-            Rational r1 = new Rational(2, 5);
-            System.out.println(" Passes");
-            if(r1.getNumerator() == 2)
-            {
-                System.out.println(" Passes");
-            }
-            else
-            {
-                System.out.println("**** Fails - numerator not 2");
-            }
-            if(r1.getDenominator() == 5)
-            {
-                System.out.println(" Passes");
-            }
-            else
-            {
-                System.out.println("**** Fails - denominator not 5");
-            }
-        }
-        catch(ZeroDenominatorException e)
-        {
-            System.out.println("**** Fails - exception thrown");
-        }
-        System.out.println("Trying 2/0");
-        try{
-            Rational r1 = new Rational(2, 0);
-            System.out.println("**** Fails - no exception thrown");
-        }
-        catch(ZeroDenominatorException e)
-        {
-            System.out.println(" Passes");
-        }
-        System.out.println("Trying 42/30");
-        Rational r2 = new Rational(42, 30);
-        if(r2.getNumerator() == 7)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - numerator not 7");
-        }
-        if(r2.getDenominator() == 5)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - denominator not 5");
-        }
-        System.out.println("Trying 6/-3");
-        Rational r3 = new Rational(6, -3);
-        if(r3.getNumerator() == -2)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - numerator not -2");
-        }
-        if(r3.getDenominator() == 1)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - denominator not 1");
-        }
-        System.out.println("Trying -6/-3");
-        Rational r4 = new Rational(-6, -3);
-        if(r4.getNumerator() == 2)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - numerator not 2");
-        }
-        if(r4.getDenominator() == 1)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - denominator not 1");
-        }
-        System.out.println("Trying -6/3");
-        Rational r5 = new Rational(-6, 3);
-        if(r5.getNumerator() == -2)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - numerator not -2");
-        }
-        if(r5.getDenominator() == 1)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - denominator not 1");
-        }
-        System.out.println("Trying 0/3");
-        Rational r6 = new Rational(0, 3);
-        if(r6.getNumerator() == 0)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - numerator not 0");
-        }
-        if(r6.getDenominator() == 1)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - denominator not 1");
-        }
-        System.out.println("Constructor tests finished");
+        this.numerator = numerator;
+        this.denominator = denominator;
+        normalize();
     }
-    public static void testNegate()
-    {
-        System.out.println();
-        System.out.println();
-        System.out.println("TESTING the negate method");
-        System.out.println("Negate 1/2");
-        Rational r1 = new Rational(1, 2);
-        Rational r2 = r1.negate();
-        if(r1.getNumerator() == 1)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - changed numerator of negate argument");
-        }
-        if(r1.getDenominator() == 2)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - changed denominator of negate argument");
-        }
-        if(r2.getNumerator() == -1)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - numerator not -1");
-        }
-        if(r2.getDenominator() == 2)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - denominator not 2");
-        }
-        System.out.println("Negate -2/3");
-        r1 = new Rational(-2, 3);
-        r2 = r1.negate();
-        if(r1.getNumerator() == -2)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - changed numerator of negate argument");
-        }
-        if(r1.getDenominator() == 3)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - changed denominator of negate argument");
-        }
-        if(r2.getNumerator() == 2)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - numerator not 2");
-        }
-        if(r2.getDenominator() == 3)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - denominator not 3");
-        }
-        System.out.println("Negate tests finished");
+
+    //get numerator
+    public int getNumerator() {
+        return numerator;
     }
-    public static void testInvert()
-    {
-        System.out.println();
-        System.out.println();
-        System.out.println("TESTING the invert method");
-        System.out.println("Invert 1/2");
-        Rational r1 = new Rational(1, 2);
-        Rational r2 = r1.invert();
-        if(r1.getNumerator() == 1)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - changed numerator of negate argument");
-        }
-        if(r1.getDenominator() == 2)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - changed denominator of negate argument");
-        }
-        if(r2.getNumerator() == 2)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - numerator not 2");
-        }
-        if(r2.getDenominator() == 1)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - denominator not 1");
-        }
-        System.out.println("Invert -2/3");
-        r1 = new Rational(-2, 3);
-        r2 = r1.invert();
-        if(r1.getNumerator() == -2)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - changed numerator of negate argument");
-        }
-        if(r1.getDenominator() == 3)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - changed denominator of negate argument");
-        }
-        if(r2.getNumerator() == -3)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - numerator not -3");
-        }
-        if(r2.getDenominator() == 2)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - denominator not 2");
-        }
-        System.out.println("Invert 0/5");
-        r1 = new Rational(0, 5);
-        try
-        {
-            r2 = r1.invert();
-            System.out.println("**** Fails - did not throw zero denominator exception");
-        }
-        catch(ZeroDenominatorException e)
-        {
-            System.out.println(" Passes");
-        }
-        System.out.println("Invert tests finished");
+
+    //get denominator
+    public int getDenominator() {
+        return denominator;
     }
-    public static void testAddSubtract()
-    {
-        System.out.println();
-        System.out.println();
-        System.out.println("TESTING the add and subtract methods");
-        System.out.println("Adding 1/2 and 1/2");
-        Rational r1 = new Rational(1, 2);
-        Rational r2 = r1.add(r1);
-        if(r1.getNumerator() == 1)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - changed numerator of add argument");
-        }
-        if(r1.getDenominator() == 2)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - changed denominator of add argument");
-        }
-        if(r2.getNumerator() == 1)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - numerator not 1");
-        }
-        if(r2.getDenominator() == 1)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - denominator not 1");
-        }
-        System.out.println("Adding 4/7 and 3/5");
-        r1 = new Rational(4, 7);
-        r2 = new Rational(3, 5);
-        Rational r3 = r1.add(r2);
-        if(r1.getNumerator() == 4)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - changed numerator of first add argument");
-        }
-        if(r1.getDenominator() == 7)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - changed denominator of first add argument");
-        }
-        if(r2.getNumerator() == 3)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - changed numerator of second add argument");
-        }
-        if(r2.getDenominator() == 5)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - changed denominator of second add argument");
-        }
-        if(r3.getNumerator() == 41)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - numerator not 41");
-        }
-        if(r3.getDenominator() == 35)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - denominator not 35");
-        }
-        System.out.println("Adding 1/2 and 1/6");
-        r1 = new Rational(1, 2);
-        r2 = new Rational(1, 6);
-        r3 = r1.add(r2);
-        if(r3.getNumerator() == 2)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - numerator not 2");
-        }
-        if(r3.getDenominator() == 3)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - denominator not 3");
-        }
-        System.out.println("Subtracting 1/2 and 1/2");
-        r1 = new Rational(1, 2);
-        r2 = r1.subtract(r1);
-        if(r1.getNumerator() == 1)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - changed numerator of subtract argument");
-        }
-        if(r1.getDenominator() == 2)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - changed denominator of subtract argument");
-        }
-        if(r2.getNumerator() == 0)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - numerator not 0");
-        }
-        if(r2.getDenominator() == 1)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - denominator not 1");
-        }
-        System.out.println("Subtracting 4/7 and 3/5");
-        r1 = new Rational(4, 7);
-        r2 = new Rational(3, 5);
-        r3 = r1.subtract(r2);
-        if(r1.getNumerator() == 4)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - changed numerator of first subtract argument");
-        }
-        if(r1.getDenominator() == 7)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - changed denominator of first subtract argument");
-        }
-        if(r2.getNumerator() == 3)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - changed numerator of second subtract argument");
-        }
-        if(r2.getDenominator() == 5)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - changed denominator of second subtract argument");
-        }
-        if(r3.getNumerator() == -1)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - numerator not -1");
-        }
-        if(r3.getDenominator() == 35)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - denominator not 35");
-        }
-        System.out.println("Subtracting 1/2 and 1/6");
-        r1 = new Rational(1, 2);
-        r2 = new Rational(1, 6);
-        r3 = r1.subtract(r2);
-        if(r3.getNumerator() == 1)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - numerator not 1");
-        }
-        if(r3.getDenominator() == 3)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - denominator not 3");
-        }
-        System.out.println("Add/Subtract tests finished");
+
+    //set numerator
+    public void setNumerator(int numerator) {
+        this.numerator = numerator;
     }
-    public static void testMultiplyDivide()
+
+    //set denominator
+    public void setDenominator(int denominator) {
+        this.denominator = denominator;
+    }
+
+    //compute negation of rational number
+    public Rational negate() {
+        return new Rational(-numerator, denominator);
+    }
+
+    //Invert a rational number r
+    public Rational invert() {
+        return new Rational(denominator, numerator);
+    }
+
+    //compute sum of two rational numbers
+    public Rational add(Rational rational) {
+        int numerator = this.numerator * rational.denominator
+                + this.denominator * rational.numerator;
+        int denominator = this.denominator * rational.denominator;
+        return new Rational(numerator, denominator);
+    }
+
+    //compute difference of two rational numbers
+    public Rational subtract(Rational rational) {
+        int numerator = this.numerator * rational.denominator
+                - this.denominator * rational.numerator;
+        int denominator = this.denominator * rational.denominator;
+        return new Rational(numerator, denominator);
+    }
+
+    //compute multiplication of two rational numbers
+    public Rational multiply(Rational rational) {
+        int numerator = this.numerator * rational.numerator;
+        int denominator = this.denominator * rational.denominator;
+        return new Rational(numerator, denominator);
+    }
+
+    //compute division of two rational numbers
+    public Rational divide(Rational rational) {
+        int numerator = this.numerator * rational.denominator;
+        int denominator = this.denominator * rational.numerator;
+        return new Rational(numerator, denominator);
+    }
+
+
+    /*
+     * Put the rational number in normal form where the numerator
+     * and the denominator share no common factors.  Guarantee that only the numerator
+     * is negative.
+     *
+     */
+    private void normalize() {
+        int gcd = gcd(Math.abs(numerator), Math.abs(denominator));
+        numerator /= gcd;
+        denominator /= gcd;
+    }
+
+    /**
+     * Recursively compute the greatest common divisor of two positive integers
+     *
+     * @param a the first argument of gcd
+     * @param b the second argument of gcd
+     * @return the gcd of the two arguments
+     */
+    private int gcd(int a, int b)
     {
-        System.out.println();
-        System.out.println();
-        System.out.println("TESTING the multiply and divide methods");
-        System.out.println("Multiply 1/2 and 1/2");
-        Rational r1 = new Rational(1, 2);
-        Rational r2 = r1.multiply(r1);
-        if(r1.getNumerator() == 1)
-        {
-            System.out.println(" Passes");
-        }
+        int result = 0;
+        if(a<b)
+            result = gcd(b,a);
+        else if(b==0)
+            result = a;
         else
         {
-            System.out.println("**** Fails - changed numerator of add argument");
+            int remainder = a % b;
+            result = gcd(b, remainder);
         }
-        if(r1.getDenominator() == 2)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - changed denominator of add argument");
-        }
-        if(r2.getNumerator() == 1)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - numerator not 1");
-        }
-        if(r2.getDenominator() == 4)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - denominator not 4");
-        }
-        System.out.println("Multiply 5/7 and 3/5");
-        r1 = new Rational(5, 7);
-        r2 = new Rational(3, 5);
-        Rational r3 = r1.multiply(r2);
-        if(r1.getNumerator() == 5)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - changed numerator of first add argument");
-        }
-        if(r1.getDenominator() == 7)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - changed denominator of first add argument");
-        }
-        if(r2.getNumerator() == 3)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - changed numerator of second add argument");
-        }
-        if(r2.getDenominator() == 5)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - changed denominator of second add argument");
-        }
-        if(r3.getNumerator() == 3)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - numerator not 3");
-        }
-        if(r3.getDenominator() == 7)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - denominator not 7");
-        }
-        System.out.println("Multiply 1/2 and 0/1");
-        r1 = new Rational(1, 2);
-        r2 = new Rational(0, 1);
-        r3 = r1.multiply(r2);
-        if(r3.getNumerator() == 0)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - numerator not 0");
-        }
-        if(r3.getDenominator() == 1)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - denominator not 1");
-        }
-        System.out.println("Dividing 1/2 by 1/2");
-        r1 = new Rational(1, 2);
-        r2 = r1.divide(r1);
-        if(r1.getNumerator() == 1)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - changed numerator of subtract argument");
-        }
-        if(r1.getDenominator() == 2)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - changed denominator of subtract argument");
-        }
-        if(r2.getNumerator() == 1)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - numerator not 1");
-        }
-        if(r2.getDenominator() == 1)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - denominator not 1");
-        }
-        System.out.println("Dividing 4/7 by 3/28");
-        r1 = new Rational(4, 7);
-        r2 = new Rational(3, 28);
-        r3 = r1.divide(r2);
-        if(r1.getNumerator() == 4)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - changed numerator of first subtract argument");
-        }
-        if(r1.getDenominator() == 7)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - changed denominator of first subtract argument");
-        }
-        if(r2.getNumerator() == 3)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - changed numerator of second subtract argument");
-        }
-        if(r2.getDenominator() == 28)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - changed denominator of second subtract argument");
-        }
-        if(r3.getNumerator() == 16)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - numerator not 16");
-        }
-        if(r3.getDenominator() == 3)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - denominator not 3");
-        }
-        System.out.println("Dividing 1/2 by 1/6");
-        r1 = new Rational(1, 2);
-        r2 = new Rational(1, 6);
-        r3 = r1.divide(r2);
-        if(r3.getNumerator() == 3)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - numerator not 3");
-        }
-        if(r3.getDenominator() == 1)
-        {
-            System.out.println(" Passes");
-        }
-        else
-        {
-            System.out.println("**** Fails - denominator not 1");
-        }
-        System.out.println("Dividing 1/2 by 0/1");
-        r1 = new Rational(1, 2);
-        r2 = new Rational(0, 1);
-        try
-        {
-            r3 = r1.divide(r2);
-            System.out.println("**** Fails - did not throw zero denominator exception");
-        }
-        catch(ZeroDenominatorException e)
-        {
-            System.out.println(" Passes");
-        }
-        System.out.println("Multiply/Divide tests finished");
+        return result;
     }
 }
+
+// Sample Run at RationalTest
+/*/Users/jagerforest/Library/Java/JavaVirtualMachines/openjdk-20/Contents/Home/bin/java -javaagent:/Applications/IntelliJ IDEA.app/Contents/lib/idea_rt.jar=50651:/Applications/IntelliJ IDEA.app/Contents/bin -Dfile.encoding=UTF-8 -Dsun.stdout.encoding=UTF-8 -Dsun.stderr.encoding=UTF-8 -classpath /Users/jagerforest/IdeaProjects/_666/out/production/_666 RationalTest
+TESTING the constructor, getNumerator, getDenominator
+Trying default constructor
+ Passes
+ Passes
+Constructing 2/5
+ Passes
+ Passes
+ Passes
+Trying 2/0
+ Passes
+Trying 42/30
+ Passes
+ Passes
+Trying 6/-3
+ Passes
+ Passes
+Trying -6/-3
+ Passes
+ Passes
+Trying -6/3
+ Passes
+ Passes
+Trying 0/3
+ Passes
+ Passes
+Constructor tests finished
+
+
+TESTING the negate method
+Negate 1/2
+ Passes
+ Passes
+ Passes
+ Passes
+Negate -2/3
+ Passes
+ Passes
+ Passes
+ Passes
+Negate tests finished
+
+
+TESTING the invert method
+Invert 1/2
+ Passes
+ Passes
+ Passes
+ Passes
+Invert -2/3
+ Passes
+ Passes
+ Passes
+ Passes
+Invert 0/5
+ Passes
+Invert tests finished
+
+
+TESTING the add and subtract methods
+Adding 1/2 and 1/2
+ Passes
+ Passes
+ Passes
+ Passes
+Adding 4/7 and 3/5
+ Passes
+ Passes
+ Passes
+ Passes
+ Passes
+ Passes
+Adding 1/2 and 1/6
+ Passes
+ Passes
+Subtracting 1/2 and 1/2
+ Passes
+ Passes
+ Passes
+ Passes
+Subtracting 4/7 and 3/5
+ Passes
+ Passes
+ Passes
+ Passes
+ Passes
+ Passes
+Subtracting 1/2 and 1/6
+ Passes
+ Passes
+Add/Subtract tests finished
+
+
+TESTING the multiply and divide methods
+Multiply 1/2 and 1/2
+ Passes
+ Passes
+ Passes
+ Passes
+Multiply 5/7 and 3/5
+ Passes
+ Passes
+ Passes
+ Passes
+ Passes
+ Passes
+Multiply 1/2 and 0/1
+ Passes
+ Passes
+Dividing 1/2 by 1/2
+ Passes
+ Passes
+ Passes
+ Passes
+Dividing 4/7 by 3/28
+ Passes
+ Passes
+ Passes
+ Passes
+ Passes
+ Passes
+Dividing 1/2 by 1/6
+ Passes
+ Passes
+Dividing 1/2 by 0/1
+ Passes
+Multiply/Divide tests finished
+
+Process finished with exit code 0
+*/

@@ -1,258 +1,113 @@
-//Rational class has denominator and numerator
-//Rational class has methods to compute negation, reciprocal, compare two rational numbers for equality,
-// compute sum of two rational numbers, and compute two rational numbers difference
-//It also will compute the result of two rational numbers multiplication and division
-//It also has a method to convert rational number to string
+/**
+ * The counter class implements a counter that will roll over to the initial
+ * value when it hits the maximum value.
+ *   This project was completed at Apr 17 2023 by group "Better Call Stack"
+ *   with group member:  Linh Pham, Huiguang Ma(Jager is me), jaya singh and Vincent Xayasak.
+ */
+public class Counter
+{
+    // PUT PRIVATE DATA FIELDS HERE
+    private int min;
+    private int max;
+    private int val;
 
-public class Rational {
-    private int numerator;
-    //denominator cannot be 0
-    private int denominator;
-    //default constructor initializes numerator and denominator to 1
-    public Rational() {
-        this(1, 1);
-    }
-//overload constructor also simplifies rational number
-
-    public Rational(int numerator, int denominator) {
-        if (denominator == 0) {
-            throw new ZeroDenominatorException("Denominator cannot be 0");
-        }else if(numerator < 0 && denominator < 0){
-            numerator = Math.abs(numerator);
-            denominator = Math.abs(denominator);
-        }else if(denominator < 0){
-            numerator = -numerator;
-            denominator = Math.abs(denominator);
-        }
-        this.numerator = numerator;
-        this.denominator = denominator;
-        normalize();
-    }
-
-    //get numerator
-    public int getNumerator() {
-        return numerator;
-    }
-
-    //get denominator
-    public int getDenominator() {
-        return denominator;
-    }
-
-    //set numerator
-    public void setNumerator(int numerator) {
-        this.numerator = numerator;
-    }
-
-    //set denominator
-    public void setDenominator(int denominator) {
-        this.denominator = denominator;
-    }
-
-    //compute negation of rational number
-    public Rational negate() {
-        return new Rational(-numerator, denominator);
-    }
-
-    //Invert a rational number r
-    public Rational invert() {
-        return new Rational(denominator, numerator);
-    }
-
-    //compute sum of two rational numbers
-    public Rational add(Rational rational) {
-        int numerator = this.numerator * rational.denominator
-                + this.denominator * rational.numerator;
-        int denominator = this.denominator * rational.denominator;
-        return new Rational(numerator, denominator);
-    }
-
-    //compute difference of two rational numbers
-    public Rational subtract(Rational rational) {
-        int numerator = this.numerator * rational.denominator
-                - this.denominator * rational.numerator;
-        int denominator = this.denominator * rational.denominator;
-        return new Rational(numerator, denominator);
-    }
-
-    //compute multiplication of two rational numbers
-    public Rational multiply(Rational rational) {
-        int numerator = this.numerator * rational.numerator;
-        int denominator = this.denominator * rational.denominator;
-        return new Rational(numerator, denominator);
-    }
-
-    //compute division of two rational numbers
-    public Rational divide(Rational rational) {
-        int numerator = this.numerator * rational.denominator;
-        int denominator = this.denominator * rational.numerator;
-        return new Rational(numerator, denominator);
-    }
-
-
-    /*
-     * Put the rational number in normal form where the numerator
-     * and the denominator share no common factors.  Guarantee that only the numerator
-     * is negative.
-     *
+    /**
+     * The default constructor for objects of class Counter.  Minimum is 0 and the maximum
+     * is the largest possible integer.
      */
-    private void normalize() {
-        int gcd = gcd(Math.abs(numerator), Math.abs(denominator));
-        numerator /= gcd;
-        denominator /= gcd;
+    public Counter()
+    {
+        // ADD CODE FOR THE CONSTRUCTOR
+        this.min = 0;
+        this.max = Integer.MAX_VALUE;
+        this.val = 0;
+    }
+
+
+    /**
+     * The alternate constructor for objects of class Counter.  The minimum and maximum values are given as parameters.
+     * The counter starts at the minimum value.
+     * @param min The minimum value that the counter can have
+     * @param max The maximum value that the counter can have
+     * */
+    public Counter(int min, int max)
+    {
+        // ADD CODE FOR THE ALTERNATE CONSTRUCTOR
+        this.min = min;
+        this.max = max;
+        this.val = min;
     }
 
     /**
-     * Recursively compute the greatest common divisor of two positive integers
+     * Determine if two counters are in the same state
      *
-     * @param a the first argument of gcd
-     * @param b the second argument of gcd
-     * @return the gcd of the two arguments
+     * @param  otherObject   the object to test against for equality
+     * @return     true if the objects are in the same state
      */
-    private int gcd(int a, int b)
+    public boolean equals(Object otherObject)
     {
-        int result = 0;
-        if(a<b)
-            result = gcd(b,a);
-        else if(b==0)
-            result = a;
-        else
+        if (otherObject instanceof Counter)
         {
-            int remainder = a % b;
-            result = gcd(b, remainder);
+            // YOUR CODE GOES HERE
+            return true;
         }
-        return result;
+        return false;
+    }
+
+
+
+    /**
+     * Increases the counter by one
+     */
+    public void increase()
+    {
+        // ADD CODE TO INCREASE THE VALUE OF THE COUNTER
+        this.val++;
+    }
+
+
+    /**
+     * Decreases the counter by one
+     */
+    public void decrease()
+    {
+        // ADD CODE TO INCREASE THE VALUE OF THE COUNTER
+        this.val--;
+    }
+
+    /**
+     * Get the value of the counter
+     *
+     * @return     the current value of the counter
+     */
+    public int value()
+    {
+        // CHANGE THE RETURN TO GIVE THE CURRENT VALUE OF THE COUNTER
+        return this.val;
+    }
+
+
+    /**
+     * Accessor that allows the client to determine if the counter
+     *             rolled over on the last count
+     *
+     * @return     true if the counter rolled over
+     */
+    public boolean rolledOver()
+    {
+        // CHANGE THE RETURN TO THE ROLLOVER STATUS OF THE COUNTER
+        return this.val == this.max || this.val == this.min;
+    }
+
+    /**
+     * Override the toString method to provide a more informative
+     * description of the counter
+     *
+     * @return     a descriptive string about the object
+     */
+    public String toString()
+    {
+        // CHANGE THE RETURN TO A DESCRIPTION OF THE COUNTER
+        return "A Counter object that keeps track of the amount of clicks as values, incrementing or decrementing.";
     }
 }
-
-// Sample Run at RationalTest
-/*/Users/jagerforest/Library/Java/JavaVirtualMachines/openjdk-20/Contents/Home/bin/java -javaagent:/Applications/IntelliJ IDEA.app/Contents/lib/idea_rt.jar=50651:/Applications/IntelliJ IDEA.app/Contents/bin -Dfile.encoding=UTF-8 -Dsun.stdout.encoding=UTF-8 -Dsun.stderr.encoding=UTF-8 -classpath /Users/jagerforest/IdeaProjects/_666/out/production/_666 RationalTest
-TESTING the constructor, getNumerator, getDenominator
-Trying default constructor
- Passes
- Passes
-Constructing 2/5
- Passes
- Passes
- Passes
-Trying 2/0
- Passes
-Trying 42/30
- Passes
- Passes
-Trying 6/-3
- Passes
- Passes
-Trying -6/-3
- Passes
- Passes
-Trying -6/3
- Passes
- Passes
-Trying 0/3
- Passes
- Passes
-Constructor tests finished
-
-
-TESTING the negate method
-Negate 1/2
- Passes
- Passes
- Passes
- Passes
-Negate -2/3
- Passes
- Passes
- Passes
- Passes
-Negate tests finished
-
-
-TESTING the invert method
-Invert 1/2
- Passes
- Passes
- Passes
- Passes
-Invert -2/3
- Passes
- Passes
- Passes
- Passes
-Invert 0/5
- Passes
-Invert tests finished
-
-
-TESTING the add and subtract methods
-Adding 1/2 and 1/2
- Passes
- Passes
- Passes
- Passes
-Adding 4/7 and 3/5
- Passes
- Passes
- Passes
- Passes
- Passes
- Passes
-Adding 1/2 and 1/6
- Passes
- Passes
-Subtracting 1/2 and 1/2
- Passes
- Passes
- Passes
- Passes
-Subtracting 4/7 and 3/5
- Passes
- Passes
- Passes
- Passes
- Passes
- Passes
-Subtracting 1/2 and 1/6
- Passes
- Passes
-Add/Subtract tests finished
-
-
-TESTING the multiply and divide methods
-Multiply 1/2 and 1/2
- Passes
- Passes
- Passes
- Passes
-Multiply 5/7 and 3/5
- Passes
- Passes
- Passes
- Passes
- Passes
- Passes
-Multiply 1/2 and 0/1
- Passes
- Passes
-Dividing 1/2 by 1/2
- Passes
- Passes
- Passes
- Passes
-Dividing 4/7 by 3/28
- Passes
- Passes
- Passes
- Passes
- Passes
- Passes
-Dividing 1/2 by 1/6
- Passes
- Passes
-Dividing 1/2 by 0/1
- Passes
-Multiply/Divide tests finished
-
-Process finished with exit code 0
-*/

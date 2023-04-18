@@ -1,8 +1,24 @@
-//Rational class has denominator and numerator
-//Rational class has methods to compute negation, reciprocal, compare two rational numbers for equality,
-// compute sum of two rational numbers, and compute two rational numbers difference
-//It also will compute the result of two rational numbers multiplication and division
-//It also has a method to convert rational number to string
+/*
+ * Group Name: "Better Call Stack"
+ * Group Members: Linh Pham, Huiguang Ma, Jaya Singh and Vincent Xayasak
+ * Instructor: Mirsaeid Abolghasemi
+ * Date: 4/20/23
+ *
+ * Private members: numerator and denominator
+ * Default constructor sets numerator and denominator to 1
+ * Overload constructor takes 2 arguments and simplifies the rational number
+ * Methods:
+ * getNumerator: returns numerator
+ * getDenominator: returns denominator
+ * negate: computes negation of rational number
+ * invert: computes inverse of rational number
+ * add: computes sum of 2 rational numbers
+ * subtract: computes difference of 2 rational numbers
+ * multiply: computes product of 2 rational numbers
+ * divide: computes quotient of 2 rational numbers
+ * normalize: puts rational number in normal form (numerator negative, no common factors)
+ * gcd: recursively computes greatest common divisor of 2 positive integers
+ */
 
 public class Rational {
     private int numerator;

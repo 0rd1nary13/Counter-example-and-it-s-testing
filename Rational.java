@@ -59,11 +59,6 @@ public class Rational {
         return new Rational(denominator, numerator);
     }
 
-    //compute reciprocal of rational number
-    public Rational reciprocal() {
-        return new Rational(denominator, numerator);
-    }
-
     //compute sum of two rational numbers
     public Rational add(Rational rational) {
         int numerator = this.numerator * rational.denominator
@@ -94,11 +89,6 @@ public class Rational {
         return new Rational(numerator, denominator);
     }
 
-    //compare two rational numbers for equality
-    public boolean equals(Rational rational) {
-        return this.numerator * rational.denominator
-                == this.denominator * rational.numerator;
-    }
 
     /*
      * Put the rational number in normal form where the numerator

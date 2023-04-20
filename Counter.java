@@ -1,6 +1,7 @@
 /*
  * Group Name: "Better Call Stack"
  * Group Members: Linh Pham, Huiguang Ma, Jaya Singh and Vincent Xayasak
+ * Class Section: CIS 22C 46796
  * Instructor: Mirsaeid Abolghasemi
  * Date: 4/20/23
  * 
@@ -8,25 +9,22 @@
  * starting the value at the minimum and increasing or decreasing whenever the increase or decrease method is called,
  * and can tell when its value has rolled over the minimum or maximum. 
  */
-public class Counter
-{
-    //these are the private integers
+
+public class Counter {
+    
     private int min;
     private int max;
     private int val;
     private int previousVal;
 
-    //this defalt constructor set min,val to 0,and max to maxium.
-    public Counter()
-    {
+    public Counter() {
         this.min = 0;
         this.max = Integer.MAX_VALUE;
         this.val = 0;
         this.previousVal = this.val;
     }
-    //this is the overload constructor
-    public Counter(int min, int max)
-    {
+
+    public Counter(int min, int max) {
         if(min >= max) {
             throw new CounterInitializationException("Minimum and Maximum cannot be the same!");
         }
@@ -35,142 +33,48 @@ public class Counter
         this.val = min;
         this.previousVal = this.val;
     }
-    //Determine if two counters are in the same state
-    public boolean equals(Object otherObject)
-    {
-        if(otherObject instanceof Counter otherCounter){
+
+    //Compares two counter objects to see if they are in the same state. 
+    public boolean equals(Object otherObject) {
+        if(otherObject instanceof Counter otherCounter) {
             return this.val == otherCounter.val && this.min == otherCounter.min && this.max == otherCounter.max && this.previousVal == otherCounter.previousVal;
         }
         return false;
     }
-    //increase the counter obj by 1
-    public void increase()
-    {
+
+    //Increases value. 
+    public void increase() {
         this.val++;
         this.previousVal = this.val;
-        if(rolledOver()){
+        if(rolledOver()) {
             this.val = this.min;
         }
     }
-    //decrease the counter obj by 1
-    public void decrease()
-    {
+
+    //Decraeses value.
+    public void decrease() {
         this.val--;
         this.previousVal = this.val;
-        if(rolledOver()){
+        if(rolledOver()) {
             this.val = this.max;
         }
     }
-    //get the value of the counter and return it
-    public int value()
-    {
+
+    //Gets value.
+    public int value() {
         return this.val;
     }
-/**
-* Accessor that allows the client to determine if the counter
-* rolled over on the last count
-*
-* @return true if the counter rolled over
-*/
-    public boolean rolledOver()
-    {
-        if(this.previousVal > this.max || this.previousVal < this.min){
+
+    //Determines if value rolled over the minimum or maximum.
+    public boolean rolledOver() {
+        if(this.previousVal > this.max || this.previousVal < this.min) {
             return true;
         }
         return false;
     }
-/**
-* Override the toString method to provide a more informative
-* description of the counter
-*
-* @return a descriptive string about the object
-*/
-    public String toString()
-    {
+
+    //Returns description of counter object.
+    public String toString() {
         return "Counter object with current value of "+this.val+", minimum of "+this.min+", and maximum of "+this.max+".\nRolled Over: "+rolledOver();
     }
 }
-
-/*
-Sample Run:
-/Users/jagerforest/Library/Java/JavaVirtualMachines/openjdk-20/Contents/Home/bin/java -javaagent:/Applications/IntelliJ IDEA.app/Contents/lib/idea_rt.jar=51164:/Applications/IntelliJ IDEA.app/Contents/bin -Dfile.encoding=UTF-8 -Dsun.stdout.encoding=UTF-8 -Dsun.stderr.encoding=UTF-8 -classpath /Users/jagerforest/IdeaProjects/_666/out/production/_666 CounterTest
-TESTING the constructor
-Trying min < max
- Passes
-Trying min = max
- Passes
-Trying min > max
- Passes
-Finished constructor testing
-
-
-TESTING the toString method
-Displaying the counter using toString:
-Counter object with current value of 1, minimum of 1, and maximum of 9.
-Rolled Over: false
-The counter should have the value 1
- the minimum should be 1, the maximum should be 9
- it should not have rolled over
-Finished toString testing
-
-
-TESTING the equals method
-trying two counters that should be in the same state
- passes
-trying two counters that should be in a different state
- passes
-trying two counters that should be in a different state
- passes
-Finished equals testing
-
-
-TESTING the increase method
-Increasing counter 1 once
- passes
- passes
-Increasing counter 1 again
- passes
- passes
-Increasing counter 1 a third time
- passes
- passes
-Increasing counter 2 until it rolls over
- passes
- passes
-Increasing counter 3 until it rolls over
- passes
- passes
-Finished increase testing
-
-
-TESTING the decrase method
-Decreasing the counter once
- passes
- passes
-Decreasing the counter again
- passes
- passes
-Decreasing the counter a third time
- passes
- passes
-Decrease counter 2 twice, then decrease counter 2 until it rolls over again
- passes
- passes
-Decrease counter 3 twice, then decrease counter 3 until it rolls over again
- passes
- passes
-Finished decrease testing
-
-
-TESTING combinations of the increase and decrease methods
-Increasing counter 2 once
- passes
-Decreasing counter 2 once
- passes
-Decreasing then increasing counter 3
- passes
-Finished combined testing
-
-Process finished with exit code 0
-
-*/
